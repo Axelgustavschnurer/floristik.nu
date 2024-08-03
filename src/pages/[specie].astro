@@ -1,0 +1,46 @@
+---
+import "@styles/main.css";
+import Layout from '@layouts/Layout.astro'
+import { pbFetch } from "@functions";
+
+const { specie } = Astro.params
+export async function getStaticPaths() {
+    let data = await pbFetch({
+        collection: "species",
+        sort: "scientific"
+    });
+
+    let params: Array<{params: {specie: string;}}> = [];
+
+    data.forEach((element: any) => {
+        params.push({
+            params: { specie: element.id }
+        });
+    });
+
+    return params;
+}
+
+let data = await pbFetch({
+    collection: "species",
+    id: specie
+});
+
+---
+
+<Layout>
+    <flex class="gap-100">
+        <img transition:name={`blogpost-image-${data.id}`} src={`https://floristik.pockethost.io/api/files/${data.collectionId}/${data.id}/${data.images[0]}`} alt="" height="256" />
+        <section>
+            <h1 class="margin-0">{data.scientific}</h1>
+            <small>{data.swedish} - {data.redlist_status}</small>
+            <p>{data.description}</p>
+        </section>
+    </flex>
+</Layout>
+
+<style>
+    img {
+        border-radius: .5rem
+    }
+</style>

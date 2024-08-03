@@ -1,0 +1,49 @@
+---
+import '@styles/main.css';
+import { ViewTransitions } from "astro:transitions";
+
+---
+
+<!doctype html>
+<html lang='se'>
+    <head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+        <ViewTransitions />
+		<title>Floristik.nu</title>
+	</head>
+    <body transition:animate="none">
+        <flex>
+            <aside class="padding-100">
+                <a href="/" class="flex gap-25 align-items-center font-weight-500 padding-50">
+                    <img src="/icons/home.svg" alt="" />
+                    Hem
+                </a>
+            </aside>
+            <main class="flex-grow-100 padding-100">
+                <slot></slot>
+            </main>
+        </flex>
+    </body>
+</html>
+
+<style>
+    aside {
+        box-shadow: 0 0 .5rem -.25rem lightslategray;
+        height: 100dvh;
+    }
+
+    a {
+        color: black;
+        text-decoration: none;
+        border-radius: .25rem;
+        transition: background-color .2s ease;
+    }
+
+    a:hover {
+        background-color: #e0e6eb;
+    }
+
+</style>

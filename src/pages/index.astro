@@ -1,16 +1,49 @@
 ---
+import Layout from '@layouts/Layout.astro'
+import { pbFetch } from '@functions'
+
+const data = await pbFetch({
+    collection: "species",
+	sort: 'scientific'
+});
+
 
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+	<h1 class="margin-top-0">Floristik</h1>
+	{data.map((specie: any) => 
+		<a href={`/${specie.id}`}> {/* TODO: Replace with scientific name */}
+			<article>
+				<flex class="gap-50 align-items-center">
+					<img transition:name={`blogpost-image-${specie.id}`} src={`https://floristik.pockethost.io/api/files/${specie.collectionId}/${specie.id}/${specie.images[0]}`} alt="" height="64" width="64" />
+					<section>
+						<h2 class="margin-0 font-weight-500">{specie.scientific}</h2>
+						<small>{specie.swedish}</small>
+					</section>
+				</flex>
+			</article>
+		</a>
+	)}
+</Layout>
+
+<style>
+	img {
+		border-radius: .25rem;
+		display: grid;
+		object-fit: cover;
+	}
+
+	a {
+		text-decoration: none;
+		color: black;
+		display: block;
+		transition: background-color .2s ease;
+		border-radius: .25rem
+	}
+
+	a:hover {
+		background-color: #e0e6eb;
+	}
+
+</style>
