@@ -12,7 +12,7 @@ const data = await pbFetch({
 
 <Layout>
 	<container-text class="margin-inline-auto">
-		<h1 class="margin-top-0 margin-left-100">Floristik</h1>
+		<h1 class="margin-top-0 margin-left-100">Växter</h1>
 		{data.map((specie: any) => 
 			<a href={`/${specie.scientific.replace(' ', '_')}`}> 
 				<article>
