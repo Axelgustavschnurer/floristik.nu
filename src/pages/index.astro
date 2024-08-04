@@ -18,8 +18,8 @@ const data = await pbFetch({
 				<article>
 					<flex class="gap-50 align-items-center justify-content-space-between padding-block-25 padding-right-25">
 						<section class="margin-left-100">
-							<h2 class="margin-0 font-weight-500">{specie.scientific}</h2>
-							<small>{specie.swedish}</small>
+							<h2 class="margin-0 font-weight-500" style="text-transform: capitalize;">{specie.scientific}</h2>
+							<small style="text-transform: capitalize;">{specie.swedish}</small>
 						</section>
 						<img transition:name={`blogpost-image-${specie.id}`} src={`https://floristik.pockethost.io/api/files/${specie.collectionId}/${specie.id}/${specie.images[0]}`} alt="" height="80" width="80" />
 					</flex>
