@@ -26,7 +26,6 @@ export async function getStaticPaths() {
 
 await pb.admins.authWithPassword(import.meta.env.PB_USERNAME, import.meta.env.PB_PASSWORD);
 const data = await pb.collection('species').getFirstListItem(`scientific ~ "${specie.replace('_', ' ')}"`) // TODO: Get function to be able to do this, TODO: Also probably work out a better way than to replace the _ with an empty space and vice versa
-
 ---
 
 <Layout>
@@ -37,7 +36,34 @@ const data = await pb.collection('species').getFirstListItem(`scientific ~ "${sp
                 <small>{data.swedish} - {data.redlist_status}</small>
                 <p>{data.description}</p>
             </section>
-            <img transition:name={`blogpost-image-${data.id}`} src={`https://floristik.pockethost.io/api/files/${data.collectionId}/${data.id}/${data.images[0]}`} alt="" height="400" width="400" />
+            <section class="image-slider-container">
+                <block class="image-slider">
+                    {data.images.map((image: any, index: number) => 
+                        <img 
+                            transition:name={index === 0 ? `blogpost-image-${data.id}` : undefined}
+                            src={`https://floristik.pockethost.io/api/files/${data.collectionId}/${data.id}/${image}`} 
+                            class="inline-block"
+                            alt="" 
+                            height="400" 
+                            width="400" 
+                        />
+                    )}
+                </block>
+                <flex class="margin-block-50 justify-content-center gap-50">
+                    {data.images.map((image: any, index: number) => 
+                        <label style="position: relative;">
+                            <input type="radio" style="position: absolute; opacity: 0;" name="image-slider" id={`image-slider-position-${index}`} checked={index === 0} />
+                            <img 
+                                src={`https://floristik.pockethost.io/api/files/${data.collectionId}/${data.id}/${image}`} 
+                                alt="" 
+                                style="border-radius: .25rem;"
+                                height="48" 
+                                width="48" 
+                            />
+                        </label>
+                    )}
+                </flex>
+            </section>
         </flex>
     </container>
 </Layout>
@@ -46,7 +72,7 @@ const data = await pb.collection('species').getFirstListItem(`scientific ~ "${sp
     img {
         border-radius: .5rem;
         object-fit: cover;
-        max-width: 100%
+        max-width: 100%;
     }
 
     h1 {
@@ -68,6 +94,49 @@ const data = await pb.collection('species').getFirstListItem(`scientific ~ "${sp
 
     p {
         max-width: 50ch;
+    }
+
+    .image-slider-container {
+        width: 400px;
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    .image-slider {
+        width: max-content;
+        transition: transform .2s ease;
+    }
+
+    label:has(img) {
+        cursor: pointer;
+    }
+    
+    input[type="radio"]:not(:checked) + img {
+        filter: grayscale(1);
+    }
+
+    label:active {
+        scale: .95;
+    }
+
+    .image-slider-container:has(#image-slider-position-0:checked) > .image-slider {
+        transform: translate(0, 0);
+    }
+
+    .image-slider-container:has(#image-slider-position-1:checked) > .image-slider {
+        transform: translate(-400px, 0);
+    }
+
+    .image-slider-container:has(#image-slider-position-2:checked) > .image-slider {
+        transform: translate(-800px, 0);
+    }
+
+    .image-slider-container:has(#image-slider-position-3:checked) > .image-slider {
+        transform: translate(-1200px, 0);
+    }
+    
+    .image-slider-container:has(#image-slider-position-4:checked) > .image-slider {
+        transform: translate(-1600px, 0);
     }
 
 </style>

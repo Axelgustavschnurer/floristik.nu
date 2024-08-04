@@ -14,7 +14,7 @@ const data = await pbFetch({
 	<container-text class="margin-inline-auto">
 		<h1 class="margin-top-0 margin-left-100">Växter</h1>
 		{data.map((specie: any) => 
-			<a href={`/${specie.scientific.replace(' ', '_')}`}> 
+			<a href={`/${specie.scientific.replace(' ', '_')}`} class="margin-block-25"> 
 				<article>
 					<flex class="gap-50 align-items-center justify-content-space-between padding-block-25 padding-right-25">
 						<section class="margin-left-100">
