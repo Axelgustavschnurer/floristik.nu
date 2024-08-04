@@ -13,7 +13,7 @@ const data = await pbFetch({
 <Layout>
 	<h1 class="margin-top-0">Floristik</h1>
 	{data.map((specie: any) => 
-		<a href={`/${specie.id}`}> {/* TODO: Replace with scientific name */}
+		<a href={`/${specie.scientific.replace(' ', '_')}`}> {/* TODO: Replace with scientific name */}
 			<article>
 				<flex class="gap-50 align-items-center">
 					<img transition:name={`blogpost-image-${specie.id}`} src={`https://floristik.pockethost.io/api/files/${specie.collectionId}/${specie.id}/${specie.images[0]}`} alt="" height="64" width="64" />

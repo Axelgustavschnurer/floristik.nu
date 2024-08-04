@@ -2,6 +2,9 @@
 import "@styles/main.css";
 import Layout from '@layouts/Layout.astro'
 import { pbFetch } from "@functions";
+import PocketBase from 'pocketbase';
+
+const pb = new PocketBase('https://floristik.pockethost.io');
 
 const { specie } = Astro.params
 export async function getStaticPaths() {
@@ -14,17 +17,15 @@ export async function getStaticPaths() {
 
     data.forEach((element: any) => {
         params.push({
-            params: { specie: element.id }
+            params: { specie: element.scientific.replace(' ', '_') }
         });
     });
 
     return params;
 }
 
-let data = await pbFetch({
-    collection: "species",
-    id: specie
-});
+await pb.admins.authWithPassword(import.meta.env.PB_USERNAME, import.meta.env.PB_PASSWORD);
+const data = await pb.collection('species').getFirstListItem(`scientific ~ "${specie.replace('_', ' ')}"`) // TODO: Get function to be able to do this, TODO: Also probably work out a better way than to replace the _ with an empty space and vice versa
 
 ---
 
