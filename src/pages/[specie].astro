@@ -31,7 +31,7 @@ const data = await pb.collection('species').getFirstListItem(`scientific ~ "${sp
 
 <Layout>
     <container class="margin-inline-auto">
-        <flex class="gap-100 margin-block-100 justify-content-space-between flex-wrap-wrap">
+        <flex class="gap-100 margin-block-100 justify-content-space-between flex-wrap-wrap-reverse">
             <section>
                 <h1 class="margin-0">{data.scientific}</h1>
                 <small>{data.swedish} - {data.redlist_status}</small>

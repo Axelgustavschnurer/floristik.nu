@@ -1839,6 +1839,10 @@ container-text {
   flex-wrap: wrap;
 }
 
+.flex-wrap-wrap-reverse {
+  flex-wrap: wrap-reverse;
+}
+
 .align-items-flex-start {
   align-items: flex-start;
 }
