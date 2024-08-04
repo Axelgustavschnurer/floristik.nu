@@ -30,7 +30,11 @@ const data = await pb.collection('species').getFirstListItem(`scientific ~ "${sp
 ---
 
 <Layout>
-    <flex class="gap-100">
+    <a href="/" class="flex gap-25 align-items-center padding-block-50 padding-inline-100">
+        <img src="/icons/back.svg" alt="" />
+        Back to homepage
+    </a>
+    <flex class="gap-100 margin-block-100">
         <img transition:name={`blogpost-image-${data.id}`} src={`https://floristik.pockethost.io/api/files/${data.collectionId}/${data.id}/${data.images[0]}`} alt="" height="256" />
         <section>
             <h1 class="margin-0">{data.scientific}</h1>
@@ -44,4 +48,22 @@ const data = await pb.collection('species').getFirstListItem(`scientific ~ "${sp
     img {
         border-radius: .5rem
     }
+
+    a:has(img[src="/icons/back.svg"]) {
+        border-radius: 9999px;
+        transition: background-color .2s ease;
+        width: fit-content;
+        font-weight: 500;
+        color: black;
+        text-decoration: none;
+    }
+
+    a:has(img[src="/icons/back.svg"]):hover {
+        background-color: #e0e6eb;
+    }
+
+    p {
+        max-width: 50ch;
+    }
+
 </style>
