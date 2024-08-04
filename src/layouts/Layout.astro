@@ -15,17 +15,17 @@ import { ViewTransitions } from "astro:transitions";
 		<title>Floristik.nu</title>
 	</head>
     <body transition:animate="none">
-        <flex>
-            <aside class="padding-100">
+        <header class="padding-100">
+            <container-text class="margin-inline-auto">
                 <a href="/" class="flex gap-25 align-items-center font-weight-500 padding-50">
                     <img src="/icons/home.svg" alt="" />
                     Hem
                 </a>
-            </aside>
-            <main class="flex-grow-100 padding-100">
-                <slot></slot>
-            </main>
-        </flex>
+            </container-text>
+        </aside>
+        <main class="flex-grow-100 padding-100">
+            <slot></slot>
+        </main>
     </body>
 </html>
 
@@ -40,6 +40,8 @@ import { ViewTransitions } from "astro:transitions";
         text-decoration: none;
         border-radius: .25rem;
         transition: background-color .2s ease;
+        width: fit-content;
+        margin-left: auto;
     }
 
     a:hover {

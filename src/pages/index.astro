@@ -11,20 +11,22 @@ const data = await pbFetch({
 ---
 
 <Layout>
-	<h1 class="margin-top-0">Floristik</h1>
-	{data.map((specie: any) => 
-		<a href={`/${specie.scientific.replace(' ', '_')}`}> {/* TODO: Replace with scientific name */}
-			<article>
-				<flex class="gap-50 align-items-center">
-					<img transition:name={`blogpost-image-${specie.id}`} src={`https://floristik.pockethost.io/api/files/${specie.collectionId}/${specie.id}/${specie.images[0]}`} alt="" height="64" width="64" />
-					<section>
-						<h2 class="margin-0 font-weight-500">{specie.scientific}</h2>
-						<small>{specie.swedish}</small>
-					</section>
-				</flex>
-			</article>
-		</a>
-	)}
+	<container-text class="margin-inline-auto">
+		<h1 class="margin-top-0 margin-left-100">Floristik</h1>
+		{data.map((specie: any) => 
+			<a href={`/${specie.scientific.replace(' ', '_')}`}> 
+				<article>
+					<flex class="gap-50 align-items-center justify-content-space-between padding-block-25 padding-right-25">
+						<section class="margin-left-100">
+							<h2 class="margin-0 font-weight-500">{specie.scientific}</h2>
+							<small>{specie.swedish}</small>
+						</section>
+						<img transition:name={`blogpost-image-${specie.id}`} src={`https://floristik.pockethost.io/api/files/${specie.collectionId}/${specie.id}/${specie.images[0]}`} alt="" height="80" width="80" />
+					</flex>
+				</article>
+			</a>
+		)}
+	</container-text>
 </Layout>
 
 <style>
@@ -43,7 +45,7 @@ const data = await pbFetch({
 	}
 
 	a:hover {
-		background-color: #e0e6eb;
+		background: #e0e6eb;
 	}
 
 </style>
