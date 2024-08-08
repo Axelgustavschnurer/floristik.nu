@@ -1,0 +1,78 @@
+---
+    import Image from 'astro/components/Image.astro'
+
+    interface Props { 
+        id: any,  // TODO: Preferably don't pass id here
+        images: Array<string>
+    }
+
+    const { images, id } = Astro.props
+---
+
+<section class="image-slider-container-container">
+    <grid class="image-slider-container">
+        {images.map((image: any, index: number) => 
+            <Image 
+                transition:name={index === 0 ? `blogpost-image-${id}` : undefined}
+                src={image} 
+                class="image-slider-image"
+                alt="" 
+                height="400" 
+                width="400" 
+            />
+        )}
+    </grid>
+    <section class="flex gap-50 padding-50 align-items-center justify-content-center">
+        {images.map((image: any, index: number) => 
+            <label style="position: relative;">
+                <input 
+                    type="radio" 
+                    style="position: absolute; opacity: 0;" 
+                    name="image-slider" 
+                    id={`image-slider-position-${index}`} 
+                    checked={index === 0} 
+                />
+                <img 
+                    src={image} 
+                    alt="" 
+                    style="border-radius: .25rem;"
+                    height="48" 
+                    width="48" 
+                />
+            </label>
+        )}
+    </section>
+</section>
+
+<style>
+    img {
+        border-radius: .5rem;
+        object-fit: cover;
+        max-width: 100%;
+    }
+
+    label:has(img) {
+        cursor: pointer;
+    }
+    
+    input[type="radio"]:not(:checked) + img {
+        filter: grayscale(1);
+    }
+
+    label:active {
+        scale: .95;
+    }
+
+    .image-slider-container {
+        display: flex;
+        width: 400px;
+        overflow: hidden;
+        border-radius: .5rem;
+    }
+
+    .image-slider-image {
+        display: block;
+        width: 400px;
+        transition: transform .2s ease;
+    }
+</style>

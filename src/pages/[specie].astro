@@ -3,6 +3,7 @@ import "@styles/main.css";
 import Layout from '@layouts/Layout.astro'
 import { pbFetch } from "@functions";
 import PocketBase from 'pocketbase';
+import ImageSlider from "@components/ImageSlider.astro";
 
 const pb = new PocketBase('https://floristik.pockethost.io');
 
@@ -26,6 +27,12 @@ export async function getStaticPaths() {
 
 await pb.admins.authWithPassword(import.meta.env.PB_USERNAME, import.meta.env.PB_PASSWORD);
 const data = await pb.collection('species').getFirstListItem(`scientific ~ "${specie.replace('_', ' ')}"`) // TODO: Get function to be able to do this, TODO: Also probably work out a better way than to replace the _ with an empty space and vice versa 
+
+let images: Array<string> = []
+data.images.forEach((image: any) => {
+    images.push(`https://floristik.pockethost.io/api/files/${data.collectionId}/${data.id}/${image}`)
+});
+
 ---
 
 <Layout>    
@@ -36,51 +43,12 @@ const data = await pb.collection('species').getFirstListItem(`scientific ~ "${sp
                 <small>{data.swedish} - {data.redlist_status}</small>
                 <p>{data.description}</p>
             </section>
-            <section class="image-slider-container-container">
-                <grid class="image-slider-container">
-                    {data.images.map((image: any, index: number) => 
-                        <img 
-                            transition:name={index === 0 ? `blogpost-image-${data.id}` : undefined}
-                            src={`https://floristik.pockethost.io/api/files/${data.collectionId}/${data.id}/${image}`} 
-                            class="image-slider-image"
-                            alt="" 
-                            height="400" 
-                            width="400" 
-                        />
-                    )}
-                </grid>
-                <section class="flex gap-50 padding-50 align-items-center justify-content-center">
-                    {data.images.map((image: any, index: number) => 
-                        <label style="position: relative;">
-                            <input 
-                                type="radio" 
-                                style="position: absolute; opacity: 0;" 
-                                name="image-slider" 
-                                id={`image-slider-position-${index}`} 
-                                checked={index === 0} 
-                            />
-                            <img 
-                                src={`https://floristik.pockethost.io/api/files/${data.collectionId}/${data.id}/${image}`} 
-                                alt="" 
-                                style="border-radius: .25rem;"
-                                height="48" 
-                                width="48" 
-                            />
-                        </label>
-                    )}
-                </section>
-            </section>
+            <ImageSlider images={images} id={data.id} />
         </flex>
     </container>
 </Layout>
 
 <style>
-    img {
-        border-radius: .5rem;
-        object-fit: cover;
-        max-width: 100%;
-    }
-
     h1 {
         text-transform: capitalize;
     }
@@ -88,30 +56,4 @@ const data = await pb.collection('species').getFirstListItem(`scientific ~ "${sp
     p {
         max-width: 50ch;
     }
- 
-    label:has(img) {
-        cursor: pointer;
-    }
-    
-    input[type="radio"]:not(:checked) + img {
-        filter: grayscale(1);
-    }
-
-    label:active {
-        scale: .95;
-    }
-
-    .image-slider-container {
-        display: flex;
-        width: 400px;
-        overflow: hidden;
-        border-radius: .5rem;
-    }
-
-    .image-slider-image {
-        display: block;
-        width: 400px;
-        transition: transform .2s ease;
-    }
-
 </style>
