@@ -1,6 +1,7 @@
 ---
 import Layout from '@layouts/Layout.astro'
 import { pbFetch } from '@functions'
+import Image from 'astro/components/Image.astro'
 
 const data = await pbFetch({
     collection: "species",
@@ -21,7 +22,7 @@ const data = await pbFetch({
 							<h2 class="margin-0 font-weight-500" style="text-transform: capitalize;">{specie.scientific}</h2>
 							<small style="text-transform: capitalize;">{specie.swedish}</small>
 						</section>
-						<img transition:name={`blogpost-image-${specie.id}`} src={`https://floristik.pockethost.io/api/files/${specie.collectionId}/${specie.id}/${specie.images[0]}`} alt="" height="80" width="80" />
+						<Image transition:name={`blogpost-image-${specie.id}`} src={`https://floristik.pockethost.io/api/files/${specie.collectionId}/${specie.id}/${specie.images[0]}`} alt="" height="80" width="80" />
 					</flex>
 				</article>
 			</a>
