@@ -13,7 +13,7 @@
     <flex class="image-slider-container">
         {images.map((image: any, index: number) => 
             index === 0 ? (
-                <Image 
+                <Image // TODO: Do not rotate theese? Instead stack the image to the right on top of the one already there?
                     transition:name={`blogpost-image-${id}`}
                     src={image} 
                     class="image-slider-image"
@@ -74,12 +74,14 @@
 
     .image-slider-container {
         width: 400px;
+        max-width: 100%;
         overflow: hidden;
         border-radius: .5rem;
     }
 
     .image-slider-image {
         display: block;
+        max-width: 100%;
         width: 400px;
         transition: transform .2s ease;
     }
