@@ -13,7 +13,7 @@
     <flex class="image-slider-container">
         {images.map((image: any, index: number) => 
             index === 0 ? (
-                <Image // TODO: Do not rotate theese? Instead stack the image to the right on top of the one already there?
+                <Image 
                     transition:name={`blogpost-image-${id}`}
                     src={image} 
                     class="image-slider-image"
