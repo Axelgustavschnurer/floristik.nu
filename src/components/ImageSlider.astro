@@ -9,7 +9,7 @@
     const { images, id } = Astro.props
 ---
 
-<section class="image-slider-container-container">
+<section class="image-slider-container-container" style="max-width: 100%;">
     <flex class="image-slider-container">
         {images.map((image: any, index: number) => 
             index === 0 ? (
