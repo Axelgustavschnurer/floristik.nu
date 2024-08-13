@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.1",
+    "@astrojs/svelte": "^5.7.0",
     "astro": "^4.13.1",
     "pocketbase": "^0.21.4",
+    "svelte": "^4.2.18",
     "typescript": "^5.5.4"
   }
 }
